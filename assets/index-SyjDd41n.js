@@ -5,7 +5,7 @@
             <div class="popup-content">
                 <h3>${_.name}</h3>
                 <p>${_.description}</p>
-                <p><strong>Coordinates:</strong> ${_.latitude}, ${_.longitude}</p>
+                <p><strong>Coordinates:</strong> ${_.longitude} : ${_.latitude}</p>
                 ${_.image?`<img src="${_.image}" alt="${_.name}" class="popup-image" onerror="this.style.display='none'">`:""}
             </div>
         `;T.bindPopup(x),ii[_.id]=T,xn[_.id]=k,T.on("click",()=>{Ln(_.id)})})}function cs(M){const _=document.getElementById("location-list");_.innerHTML="",M.forEach(u=>{const T=document.createElement("div");T.className="location-item",T.id=`location-${u.id}`;const f=pe(u.id);T.innerHTML=`
