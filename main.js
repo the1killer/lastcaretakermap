@@ -29,7 +29,7 @@ map.setView([30, 0], 0);
 const BackgroundLayer = L.GridLayer.extend({
     createTile: function(coords) {
         const tile = document.createElement('img');
-        tile.src = '/images/mapbg.png';
+        tile.src = './images/mapbg.png';
         tile.style.width = '100%';
         tile.style.height = '100%';
         return tile;
@@ -130,7 +130,7 @@ function updateToggleButton(locationId, visible) {
 // Function to create custom icon for each location
 function createCustomIcon(imageName) {
     return L.icon({
-        iconUrl: `/images/${imageName}`,
+        iconUrl: `./images/${imageName}`,
         iconSize: [32, 32],
         iconAnchor: [16, 32],
         popupAnchor: [0, -50]
@@ -140,7 +140,7 @@ function createCustomIcon(imageName) {
 // Load and display locations from data.json
 async function loadLocations() {
     try {
-        const response = await fetch('/data.json');
+        const response = await fetch('./data.json');
         const data = await response.json();
         locations = data.locations;
         
