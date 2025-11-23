@@ -22,7 +22,8 @@
             "description": "Navigation Beacon 49 is the first navigation beacon.",
             "latitude": 6,
             "longitude": 33,
-            "image": "beacon.png"
+            "image": "beacon.png",
+            "radarRadius": 27
         },
         {
             "name": "Lazarus Complex",
@@ -30,7 +31,8 @@
             "description": "Lazarus Complex is a human growth facility.",
             "latitude": -2,
             "longitude": 69,
-            "image": "lazarus.png"
+            "image": "lazarus.png",
+            "radarRadius": 31
         },
         {
             "name": "Norfolk Grave",
@@ -46,7 +48,8 @@
             "description": "Navigation Beacon 15 is another navigation beacon.",
             "latitude": -53,
             "longitude": 69,
-            "image": "beacon.png"
+            "image": "beacon.png",
+            "radarRadius": 30
         },
         {
             "name": "Seed Vault Prometheus",
@@ -103,7 +106,8 @@
             "description": "The Last Listener Station is a navigation beacon.",
             "latitude": 11,
             "longitude": 115,
-            "image": "beacon.png"
+            "image": "beacon.png",
+            "radarRadius": 9
         },
         {
             "name": "Habitat Node 03-12.3",
@@ -181,7 +185,8 @@
             "description": "Navigation Beacon 32 is a navigation beacon.",
             "latitude": 35,
             "longitude": 109,
-            "image": "beacon.png"
+            "image": "beacon.png",
+            "radarRadius": 29
         },
         {
             "name": "Salem Grave",

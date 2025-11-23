@@ -84,6 +84,7 @@ new GridLayer({
 // Store markers for easy access
 const markers = {};
 const markerLabels = {};
+const radarCircles = {};
 let locations = [];
 let hiddenLocations = [];
 let lastListenerLocations = [];
@@ -103,6 +104,7 @@ function setVisibilityState(locationId, visible) {
 function toggleMarkerVisibility(locationId) {
     const marker = markers[locationId];
     const label = markerLabels[locationId];
+    const radarCircle = radarCircles[locationId];
     const currentState = getVisibilityState(locationId);
     const newState = !currentState;
     
@@ -110,9 +112,11 @@ function toggleMarkerVisibility(locationId) {
         if (newState) {
             marker.addTo(map);
             if (label) label.addTo(map);
+            if (radarCircle) radarCircle.addTo(map);
         } else {
             map.removeLayer(marker);
             if (label) map.removeLayer(label);
+            if (radarCircle) map.removeLayer(radarCircle);
         }
     }
     
@@ -161,10 +165,12 @@ function refreshDisplay() {
     // Clear existing markers
     Object.values(markers).forEach(marker => map.removeLayer(marker));
     Object.values(markerLabels).forEach(label => map.removeLayer(label));
+    Object.values(radarCircles).forEach(circle => map.removeLayer(circle));
     
     // Clear marker references
     Object.keys(markers).forEach(key => delete markers[key]);
     Object.keys(markerLabels).forEach(key => delete markerLabels[key]);
+    Object.keys(radarCircles).forEach(key => delete radarCircles[key]);
     
     // Get current settings
     const showHidden = localStorage.getItem('show-hidden-locations') === 'true';
@@ -218,10 +224,24 @@ function addMarkersToMap(locations) {
             interactive: false
         });
         
+        // Add radar circle if radarRadius is specified
+        let radarCircle = null;
+        if (location.radarRadius) {
+            radarCircle = L.circle([-location.latitude + 1, location.longitude], {
+                radius: location.radarRadius,
+                color: '#CC00CC',
+                fillColor: '#CC00CC',
+                fillOpacity: 0,
+                weight: 2,
+                opacity: 0.5
+            });
+        }
+        
         // Only add to map if visible
         if (isVisible) {
             marker.addTo(map);
             label.addTo(map);
+            if (radarCircle) radarCircle.addTo(map);
         }
         
         // Create popup content
@@ -236,9 +256,10 @@ function addMarkersToMap(locations) {
         
         marker.bindPopup(popupContent);
         
-        // Store marker and label references
+        // Store marker, label, and radar circle references
         markers[location.id] = marker;
         markerLabels[location.id] = label;
+        if (radarCircle) radarCircles[location.id] = radarCircle;
         
         // Add click event to highlight sidebar item
         marker.on('click', () => {
