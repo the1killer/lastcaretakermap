@@ -88,6 +88,7 @@ const radarCircles = {};
 let locations = [];
 let hiddenLocations = [];
 let lastListenerLocations = [];
+let selectedMarkerId = null;
 
 // Load visibility state from localStorage
 function getVisibilityState(locationId) {
@@ -134,12 +135,14 @@ function updateToggleButton(locationId, visible) {
 }
 
 // Function to create custom icon for each location
-function createCustomIcon(imageName) {
+function createCustomIcon(imageName, locationType = 'regular') {
+    const className = locationType === 'lastListener' ? 'marker-icon-last-listener' : '';
     return L.icon({
         iconUrl: `./images/${imageName}`,
         iconSize: [32, 32],
         iconAnchor: [16, 32],
-        popupAnchor: [0, -50]
+        popupAnchor: [0, -50],
+        className: className
     });
 }
 
@@ -180,14 +183,14 @@ function refreshDisplay() {
     displayLocationSections();
     
     // Add markers for enabled location types
-    addMarkersToMap(locations);
+    addMarkersToMap(locations, 'regular');
     
     if (showHidden) {
-        addMarkersToMap(hiddenLocations);
+        addMarkersToMap(hiddenLocations, 'hidden');
     }
     
     if (showLastListener) {
-        addMarkersToMap(lastListenerLocations);
+        addMarkersToMap(lastListenerLocations, 'lastListener');
     }
     
     // Fit map to show all visible markers
@@ -203,12 +206,12 @@ function refreshDisplay() {
 }
 
 // Add markers to the map
-function addMarkersToMap(locations) {
+function addMarkersToMap(locations, locationType = 'regular') {
     locations.forEach(location => {
         const isVisible = getVisibilityState(location.id);
         
         const marker = L.marker([-location.latitude, location.longitude], {
-            icon: createCustomIcon(location.image)
+            icon: createCustomIcon(location.image, locationType)
         });
         
         // Add text label above marker
@@ -261,9 +264,10 @@ function addMarkersToMap(locations) {
         markerLabels[location.id] = label;
         if (radarCircle) radarCircles[location.id] = radarCircle;
         
-        // Add click event to highlight sidebar item
+        // Add click event to highlight sidebar item and marker
         marker.on('click', () => {
             highlightLocation(location.id);
+            highlightMarker(location.id);
         });
     });
 }
@@ -362,6 +366,7 @@ function createLocationItem(location) {
             map.setView([-location.latitude, location.longitude], 6);
             marker.openPopup();
             highlightLocation(location.id);
+            highlightMarker(location.id);
         }
     });
     
@@ -390,6 +395,28 @@ function highlightLocation(locationId) {
     if (selectedItem) {
         selectedItem.classList.add('active');
         selectedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+// Highlight selected marker on map
+function highlightMarker(locationId) {
+    // Remove highlight from previously selected marker
+    if (selectedMarkerId !== null && markers[selectedMarkerId]) {
+        const prevMarker = markers[selectedMarkerId];
+        const prevIcon = prevMarker.getElement();
+        if (prevIcon) {
+            prevIcon.classList.remove('marker-selected');
+        }
+    }
+    
+    // Add highlight to newly selected marker
+    selectedMarkerId = locationId;
+    const marker = markers[locationId];
+    if (marker) {
+        const icon = marker.getElement();
+        if (icon) {
+            icon.classList.add('marker-selected');
+        }
     }
 }
 

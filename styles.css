@@ -275,6 +275,16 @@ header p {
     font-family: 'ui-monospace', monospace;
 }
 
+/* Last Listener marker tint */
+.marker-icon-last-listener {
+    filter: brightness(0) saturate(100%) invert(96%) sepia(28%) saturate(4296%) hue-rotate(163deg) brightness(104%) contrast(101%);
+}
+
+/* Selected marker highlight */
+.marker-selected {
+    filter: brightness(0) saturate(100%) invert(85%) sepia(79%) saturate(1475%) hue-rotate(359deg) brightness(104%) contrast(104%) !important;
+}
+
 /* Marker label styles */
 .marker-label {
     background: transparent;
