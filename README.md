@@ -4,7 +4,7 @@ An interactive map application built with Leaflet.js and Vite that displays loca
 
 Based on the game ["The Last Caretaker"](https://thelastcaretaker.com/) by [Channel 37](https://www.channel37.co/). This map is not affiliated with Channel 37, and just made by a loving fan.
 
-For your viewing pleasure: https://the1killer.github.io/lastcaretakermap/
+For your viewing pleasure: https://the1killer.github.io/LastCaretakerMap/
 
 <img width="529" height="326" alt="tlc-map" src="https://github.com/user-attachments/assets/3c27b5f5-8a32-4344-9140-ac96625547b5" />
 
